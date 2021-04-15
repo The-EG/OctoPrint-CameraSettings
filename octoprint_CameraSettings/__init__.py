@@ -58,7 +58,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 				r'^bcm2835-codec-\w+$',
 				r'^bcm2835-isp-\w+$'
 			],
-			presets=[{'name': 'test'}],
+			presets=[],
 			load_preset_on_startup=False,
 			startup_preset_name=None
 		)
