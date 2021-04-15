@@ -1,0 +1,4 @@
+include README.md
+recursive-include octoprint_CameraSettings/templates *
+recursive-include octoprint_CameraSettings/translations *
+recursive-include octoprint_CameraSettings/static *

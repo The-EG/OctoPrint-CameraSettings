@@ -1,0 +1,24 @@
+<h3>Camera Settings</h3>
+
+<div class="form-horizontal">
+    <div class="control-group">
+        <div class="controls">
+            <label class="checkbox">
+                <input type="checkbox" data-bind="checked: settings.plugins.camerasettings.show_preview">Show Camera Preview
+            </label>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <label class="checkbox">
+                <input type="checkbox" data-bind="checked: settings.plugins.camerasettings.load_preset_on_startup">Load Preset on OctoPrint Startup
+            </label>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Startup Preset</label>
+        <div class="controls">
+            <select data-bind="enable: settings.plugins.camerasettings.load_preset_on_startup, options: settings.plugins.camerasettings.presets, optionsText: (preset) => preset.name, optionsValue: (preset) => preset.name, value: settings.plugins.camerasettings.startup_preset_name "></select>
+        </div>
+    </div>
+</div>
