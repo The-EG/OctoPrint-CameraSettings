@@ -58,7 +58,7 @@
     <div style="text-align:center;" data-bind="visible: settings.settings.plugins.camerasettings.show_preview">
         <img 
             data-bind="attr: { src: cameraSrc }, style: { transform: `scaleX(${settings.settings.webcam.flipH() ? -1: 1}) scaleY(${settings.settings.webcam.flipV() ? -1: 1})`}"
-            style="background-color: black; width:90%; min-height: 200px; margin-bottom: 10px;">
+            style="background-color: black; width:90%; max-width: 500px; min-height: 200px; margin-bottom: 10px;">
     </div>
     <div class="row-fluid">
         <div class="span4 text-right">Camera</div>
