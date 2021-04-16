@@ -1,4 +1,4 @@
-<h3>Camera Settings</h3>
+
 
 {% assets "js_client" %}
 <script src="{{ url_for("static", filename="js/lib/jquery/jquery.min.js") }}"></script>
@@ -52,6 +52,8 @@
     </div>
 </div>
 {% endmacro %}
+<div class="camera-settings-outer">
+<h3>Camera Settings</h3>
 <div>
     <div style="text-align:center;" data-bind="visible: settings.settings.plugins.camerasettings.show_preview">
         <img 
@@ -176,5 +178,6 @@
                 value: settings.settings.plugins.camerasettings.startup_preset_name "></select>
         </div>
     </div>
+</div>
 </div>
 </div>
