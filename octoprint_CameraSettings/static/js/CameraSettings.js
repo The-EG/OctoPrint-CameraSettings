@@ -80,7 +80,27 @@ $(function() {
         }
 
         self.savePreset = function() {
-            OctoPrint.simpleApiCommand('camerasettings', 'save_preset',{name: self.presetName(), camera: self.selectedDevice() });
+            console.log(self.settings.settings.plugins.camerasettings.presets());
+            var controls = {};
+            for (var ctrl in self.controls) {
+                if (self.controls[ctrl].use()) {
+                    controls[ctrl] = ko.observable(self.controls[ctrl].value());
+                }
+            }
+            self.deletePresetByName(self.presetName());
+            self.settings.settings.plugins.camerasettings.presets.push({name: ko.observable(self.presetName()), camera: ko.observable(self.selectedDevice()), controls: controls});
+            console.log(self.settings.settings.plugins.camerasettings.presets());
+        }
+
+        self.deletePresetByName = function(name) {
+            var ind = -1;
+            for(var i in self.settings.settings.plugins.camerasettings.presets()) {
+                if (self.settings.settings.plugins.camerasettings.presets()[i].name()===name) {
+                    ind = i;
+                    break;
+                }
+            }
+            if (ind >=0) self.settings.settings.plugins.camerasettings.presets.splice(ind, 1);
         }
 
         self.loadPreset = function() {
@@ -88,7 +108,7 @@ $(function() {
         }
 
         self.deletePreset = function() {
-            OctoPrint.simpleApiCommand('camerasettings', 'delete_preset', {name: self.presetListName() });
+            self.deletePresetByName(self.presetListName());
         }
 
         self.onEventplugin_camerasettings_cameras_list = function(payload) {
@@ -141,15 +161,13 @@ $(function() {
             new PNotify({title:'Camera Settings', text: 'Unknown Controls Details Copied to Clipboard', type: 'success'});
         }
 
-        self.onAfterTabChange = function(current, previous) {
-            if (current==='#tab_plugin_camerasettings') {
-                OctoPrint.simpleApiCommand('camerasettings', 'get_cameras');
-                console.log(self.settings.settings.webcam.streamUrl());
-                self.cameraSrc(self.settings.settings.webcam.streamUrl());
-            }
-            else {
-                self.cameraSrc(undefined);
-            }
+        self.onSettingsShown = function() {
+            OctoPrint.simpleApiCommand('camerasettings', 'get_cameras');
+            self.cameraSrc(self.settings.settings.webcam.streamUrl());
+        }
+
+        self.onSettingsHidden = function() {
+            self.cameraSrc(undefined);
         }
 
         self.selectedDevice.subscribe(function(newValue) {
@@ -166,6 +184,6 @@ $(function() {
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
         dependencies: ["settingsViewModel"],
         // Elements to bind to, e.g. #settings_plugin_CameraSettings, #tab_plugin_CameraSettings, ...
-        elements: [ '#tab_plugin_camerasettings' ]
+        elements: [ '#tab_plugin_camerasettings', '#settings_plugin_camerasettings' ]
     });
 });

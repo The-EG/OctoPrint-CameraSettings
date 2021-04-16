@@ -84,9 +84,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			'get_cameras': [],
 			'get_camera_controls': ['camera'],
 			'set_camera_controls': ['camera', 'controls'],
-			'save_preset': ['name', 'camera'],
-			'load_preset': ['name'],
-			'delete_preset': ['name']
+			'load_preset': ['name']
 		}
 
 	def on_api_command(self, command, data):
@@ -96,26 +94,8 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			self.do_camera_control_list_event(data['camera'])
 		elif command == 'set_camera_controls':
 			self.do_set_camera_controls(data['camera'], data['controls'])
-		elif command == 'save_preset':
-			self.do_save_preset(data['name'], data['camera'])
 		elif command == 'load_preset':
 			self.do_load_preset(data['name'])
-		elif command == 'delete_preset':
-			self.do_delete_preset(data['name'])
-
-	def do_save_preset(self, name, camera):
-		ctrls = self.get_camera_ctrls(camera)
-		presetControls = {x: ctrls[x]['value'] for x in ctrls}
-		presets = self._settings.get(['presets'])
-		presets.append({'name': name, 'camera': camera, 'controls': presetControls})
-		self._settings.set(['presets'], presets)
-		self._settings.save(trigger_event=True)
-
-	def do_delete_preset(self, name):
-		presets = self._settings.get(['presets'])
-		presets = [x for x in presets if x['name']!=name]
-		self._settings.set(['presets'], presets)
-		self._settings.save(trigger_event=True)
 
 	def do_load_preset(self, name):
 		presets = self._settings.get(['presets'])
@@ -180,7 +160,6 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 
 	def get_template_configs(self):
 		return [
-			dict(type="settings", custom_bindings=False)
 		]
 
 	##~~ Softwareupdate hook
