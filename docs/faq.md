@@ -2,7 +2,7 @@
 
 ## I have a RaspiCam v1, v2, HQ, etc and the controls do not work! Why?
 
-See [Raspberry Pi Cameras ('RaspiCam')](docs/setup.md#) in setup
+See [Raspberry Pi Cameras ('RaspiCam')](setup.md#raspberry-pi-cameras-raspicam) in setup
 
 ## Why do some controls have no effect?
 
