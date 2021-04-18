@@ -13,11 +13,11 @@ First ssh into the pi (user `pi`, password `raspberry`), then:
 Tell mjpg-streamer to use usb mode:
 1. run `sudo nano /boot/octopi.txt`
 2. change `camera="raspi"` to `camera="usb"`
- - this tells mjpg-streamer to the usb mode
- - if `camera=` has '#' before it, remove it
+   - this tells mjpg-streamer to the usb mode
+   - if `camera=` has '#' before it, remove it
 3. change `camera_usb_options="-r 640x480 -f"` to the appropriate resolution and fps, ie. `camera_usb_options="-r 1920x1080 -f 30"`
 4. change `camera_http_options="-n"` to `camera_http_options=""`
- - this enables the web controls in mjpg-streamer. while this shouldn't be necessary, a user reported it helped and it certainly shouldn't hurt
+   - this enables the web controls in mjpg-streamer. while this shouldn't be necessary, a user reported it helped and it certainly shouldn't hurt
 5. press control-s to save the file
 6. press control-x to exit
 
