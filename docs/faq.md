@@ -10,6 +10,6 @@ Some controls can only be set when certain conditions are met. For example, 'Exp
 
 Additionally, some controls have been observed to have no affect even when they should. This is still being investigated, and may be an issue with the video4linux driver(s). If you come across this behavior, please open an issue and specify the camera you are using and the control that does not function.
 
-## Why are settings missing? Why can't I control zoom, tile, etc?
+## Why are settings missing? Why can't I control zoom, tilt, etc?
 
 The only settings shown are those that the camera reported as supported. If you get a warning that your camera has unimplemented controls then please click the link to submit an issue. Otherwise, any 'missing' controls are not shown because they are not supported by your camera.
