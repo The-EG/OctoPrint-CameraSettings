@@ -104,10 +104,10 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			if p['name']==name: preset = p
 		
 		if preset is None: return
-		self.do_set_camera_controls(p['camera'], p['controls'])
+		self.do_set_camera_controls(p['camera'], p['controls'], False)
 
 
-	def do_set_camera_controls(self, device, controls):
+	def do_set_camera_controls(self, device, controls, send_list=True):
 		ctrl_args = []
 		for control in controls:
 			ctrl_args.append('{0}={1}'.format(control, controls[control]))
@@ -116,33 +116,45 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 		except subprocess.CalledProcessError as er:
 			self._logger.warning('Error running v42l-ctl: {0}'.format(er.output))
 
-		self.do_camera_control_list_event(device)
+		if send_list: self.do_camera_control_list_event(device)
 
 	
 	def do_cameras_list_event(self):
-		
-		video_devices = {}
-		video_ctrls = {}
-		with os.scandir('/sys/class/video4linux') as it:
-			for dirent in it:
-				if dirent.is_dir():
-					with open(os.path.join('/sys/class/video4linux',dirent.name,'name'),'r') as dev_name:
-						cam_name = dev_name.read().strip()
-						if not self.exclude_camera(cam_name):
-							video_devices[dirent.name] = cam_name
-							video_ctrls[dirent.name] = self.get_camera_ctrls(dirent.name)
-		for dev in video_ctrls:
-			if len(video_ctrls[dev])==0: del video_devices[dev]
-
 		# pylint: disable=no-member
 		event = octoprint.events.Events.PLUGIN_CAMERASETTINGS_CAMERAS_LIST
-		self._event_bus.fire(event, payload={'cameras': [{'device': d, 'camera': video_devices[d]} for d in video_devices]})
+		try:
+			video_devices = {}
+			video_ctrls = {}
+			with os.scandir('/sys/class/video4linux') as it:
+				for dirent in it:
+					if dirent.is_dir():
+						with open(os.path.join('/sys/class/video4linux',dirent.name,'name'),'r') as dev_name:
+							cam_name = dev_name.read().strip()
+							if not self.exclude_camera(cam_name):
+								video_devices[dirent.name] = cam_name
+								try:
+									video_ctrls[dirent.name] = self.get_camera_ctrls(dirent.name)
+								except FileNotFoundError: # v4l2-ctl not installed, not handing it here, we'll error out when controls are requested
+									pass
+
+			for dev in video_ctrls:
+				if len(video_ctrls[dev])==0: del video_devices[dev]
+
+			
+			self._event_bus.fire(event, payload={'cameras': [{'device': d, 'camera': video_devices[d]} for d in video_devices]})
+		except FileNotFoundError:
+			self._logger.error("/sys/class/video4linux does not exist. Can't get camera devices. Are you sure this is linux?")
+			self._event_bus.fire(event, payload={'error': "/sys/class/video4linux does not exist. Can't get camera devices."})
 
 	def do_camera_control_list_event(self,device):
 		# pylint: disable=no-member
 		event = octoprint.events.Events.PLUGIN_CAMERASETTINGS_CAMERA_CONTROL_LIST
-		ctrls = self.get_camera_ctrls(device)
-		self._event_bus.fire(event, payload={'controls': ctrls})
+		try:
+			ctrls = self.get_camera_ctrls(device)
+			self._event_bus.fire(event, payload={'controls': ctrls})
+		except FileNotFoundError: # v4l2-ctl not installed
+			self._logger.error("v4l2-ctl not installed. Install the v4l-utils package.")
+			self._event_bus.fire(event, payload={'error': 'v4l2-ctl not installed.'})
 
 
 	def register_custom_events(self, *args, **kwargs):

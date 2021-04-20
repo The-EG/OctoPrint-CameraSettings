@@ -113,38 +113,54 @@ $(function() {
         }
 
         self.onEventplugin_camerasettings_cameras_list = function(payload) {
-            self.cameras(payload.cameras);
+            if (payload.cameras) {
+                self.cameras(payload.cameras);
+            }
+            if (payload.error) {
+                new PNotify({title:'Camera Settings', text: payload.error, type: 'error', hide: false});
+            }
         }
 
         self.onEventplugin_camerasettings_camera_control_list = function(payload) {
-            var controls = payload.controls;
 
-            self.shouldUpdateSettings = false;
-            for(var control in self.controls) {
-                if (control in controls) {
-                    self.controls[control].use(true);
-                    if (self.controls[control].values) self.controls[control].values(controls[control].values);
-                    if (self.controls[control].min) self.controls[control].min(controls[control].min);
-                    if (self.controls[control].max) self.controls[control].max(controls[control].max);
-                    if (self.controls[control].step) self.controls[control].step(controls[control].step);
-                    if (controls[control].type==='bool') {
-                        self.controls[control].value(controls[control].value==='1' ? true : false);
+            if (payload.controls) {
+                var controls = payload.controls;
+
+                self.shouldUpdateSettings = false;
+                for(var control in self.controls) {
+                    if (control in controls) {
+                        self.controls[control].use(true);
+                        if (self.controls[control].values) self.controls[control].values(controls[control].values);
+                        if (self.controls[control].min) self.controls[control].min(controls[control].min);
+                        if (self.controls[control].max) self.controls[control].max(controls[control].max);
+                        if (self.controls[control].step) self.controls[control].step(controls[control].step);
+                        if (controls[control].type==='bool') {
+                            self.controls[control].value(controls[control].value==='1' ? true : false);
+                        } else {
+                            self.controls[control].value(controls[control].value);
+                        }
                     } else {
-                        self.controls[control].value(controls[control].value);
+                        self.controls[control].use(false);
                     }
-                } else {
-                    self.controls[control].use(false);
+                }
+                self.shouldUpdateSettings = true;
+
+                self.unknownControls = {};
+                self.showUnkControlsWarning(false);
+                for (var control in controls) {
+                    if (!(control in self.controls)) {
+                        self.unknownControls[control] = controls[control];
+                        self.showUnkControlsWarning(true);
+                    }
                 }
             }
-            self.shouldUpdateSettings = true;
 
-            self.unknownControls = {};
-            self.showUnkControlsWarning(false);
-            for (var control in controls) {
-                if (!(control in self.controls)) {
-                    self.unknownControls[control] = controls[control];
-                    self.showUnkControlsWarning(true);
-                }
+            if (payload.error) {
+                new PNotify({
+                    title:'Camera Settings', 
+                    text: `Could not load camera controls:<br><span style="font-style: italic;">${payload.error}</span>`,
+                    type: 'error',
+                    hide: false});
             }
         }
 
