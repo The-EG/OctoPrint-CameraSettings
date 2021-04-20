@@ -2,7 +2,7 @@
 
 Most configurations should not require any additional setups, but there may be a few exceptions.
 
-# Raspberry Pi Cameras ('RaspiCam')
+## Raspberry Pi Cameras ('RaspiCam')
 
 The Raspberry Pi cameras, those that connect directly to the Raspberry Pi by a ribbon cable, need to be used in 'USB' mode.
 
@@ -29,3 +29,14 @@ Make sure the kernel module is loaded:
 5. reboot (sudo reboot)
 
 After rebooting, the Camera Settings controls should function on the RaspiCam.
+
+## v4l-utils
+
+This plugin uses `v4l2-ctl` to set the camera settings. This should be already be installed on most Linux distributions, including OctoPi, but it's possible that it isn't. If you get an error stating 'v4l2-ctl not installed' then this is the case. 
+
+v4l2-ctl can be installed by installing the 'v4l-utils' package on most systems. For Debian/Ubuntu based distributions, run:
+
+```terminal
+sudo apt-get update
+sudo apt-get install v4l-utils
+```
