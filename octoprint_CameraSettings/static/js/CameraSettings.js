@@ -83,7 +83,6 @@ $(function() {
         }
 
         self.savePreset = function() {
-            console.log(self.settings.settings.plugins.camerasettings.presets());
             var controls = {};
             for (var ctrl in self.controls) {
                 if (self.controls[ctrl].use()) {
@@ -92,7 +91,6 @@ $(function() {
             }
             self.deletePresetByName(self.presetName());
             self.settings.settings.plugins.camerasettings.presets.push({name: ko.observable(self.presetName()), camera: ko.observable(self.selectedDevice()), controls: controls});
-            console.log(self.settings.settings.plugins.camerasettings.presets());
         }
 
         self.deletePresetByName = function(name) {
@@ -119,8 +117,6 @@ $(function() {
         }
 
         self.onEventplugin_camerasettings_camera_control_list = function(payload) {
-            console.log('Got camera controls:');
-            console.log(payload);
             var controls = payload.controls;
 
             self.shouldUpdateSettings = false;
@@ -150,8 +146,6 @@ $(function() {
                     self.showUnkControlsWarning(true);
                 }
             }
-            console.log(`Unknown controls:`);
-            console.log(self.unknownControls);
         }
 
         self.copyUnkToClipboard = function() {
