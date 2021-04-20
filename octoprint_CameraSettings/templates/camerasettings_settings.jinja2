@@ -53,134 +53,157 @@
 </div>
 {% endmacro %}
 <div class="camera-settings-outer">
-<h3>Camera Settings</h3>
-<div>
-    <div style="text-align:center;" data-bind="visible: settings.settings.plugins.camerasettings.show_preview">
-        <img 
-            data-bind="attr: { src: cameraSrc }, style: { transform: `scaleX(${settings.settings.webcam.flipH() ? -1: 1}) scaleY(${settings.settings.webcam.flipV() ? -1: 1})`}"
-            style="background-color: black; max-width: 90%; min-height: 200px; max-height: 25vh; margin-bottom: 10px;">
-    </div>
-    <div class="row-fluid">
-        <div class="span4 text-right">Camera</div>
-        <div class="span4">
-            <select class="input-block-level" id="camerasettings-device" data-bind="value: selectedDevice, options: cameras, optionsText: (camera) => camera.camera, optionsValue: (camera) => camera.device" ></select>
+    <h3>Camera Settings</h3>
+    <div>
+        <div style="text-align:center;" data-bind="visible: settings.settings.plugins.camerasettings.show_preview">
+            <img 
+                data-bind="
+                    attr: { src: cameraSrc }, 
+                    style: { transform: `scaleX(${settings.settings.webcam.flipH() ? -1: 1}) scaleY(${settings.settings.webcam.flipV() ? -1: 1})`}"
+                style="background-color: black; max-width: 90%; min-height: 200px; max-height: 25vh; margin-bottom: 10px;">
         </div>
-        <div class="span4">
-            <label class="checkbox">
-            <input type="checkbox" class="checkbox" data-bind="checked: settings.settings.plugins.camerasettings.show_preview">Show Preview
-            </label>
+        <div class="row-fluid">
+            <div class="span4 text-right">Camera</div>
+            <div class="span4">
+                <select
+                    class="input-block-level"
+                    id="camerasettings-device"
+                    data-bind="
+                        value: selectedDevice,
+                        options: cameras,
+                        optionsText: (camera) => camera.camera,
+                        optionsValue: (camera) => camera.device" ></select>
+            </div>
+            <div class="span4">
+                <label class="checkbox">
+                <input type="checkbox" class="checkbox" data-bind="checked: settings.settings.plugins.camerasettings.show_preview">Show Preview
+                </label>
+            </div>
         </div>
-    </div>
-    <div class="alert alter-block" data-bind="visible: showUnkControlsWarning">
-        <strong>Warning:</strong> your camera has controls that have not been implemented yet. Please <a target="_blank" href="https://github.com/The-EG/OctoPrint-CameraSettings/issues/new?assignees=&labels=enhancement&template=missing-camera-controls.md&title=%5BFR%5D+Implement+Controls+for+%5BCamera+Name%5D">open an issue</a> and include the following information:
-        <br><br>
-        Camera Control Information: <button class="btn btn-primary" data-bind="click: copyUnkToClipboard"><i class="fas fa-copy"></i> Copy to Clipboard</button>
-    </div>
-</div>
-<hr>
-<div style="flex-grow: 1; overflow-y: auto;">
-<div>
-    {{ bool_control('horizontal_flip', 'Horizontal Flip') }}
-    {{ bool_control('vertical_flip', 'Vertical Flip') }}
-    {{ slider_control('rotate', 'Rotation') }}
-
-    {{ bool_control('image_stabilization', 'Image Stabilization') }}
-    {{ menu_control('power_line_frequency', 'Power Line Frequency') }}
-    {{ menu_control('scene_mode', 'Scene Mode') }}
-    {{ slider_control('backlight_compensation', 'Backlight Compensation') }}
-    {{ menu_control('auto_exposure', 'Auto Exposure') }}
-    {{ menu_control('exposure_auto', 'Auto Exposure') }}
-    {{ bool_control('exposure_auto_priority', 'Exposure Auto Priority') }}
-    {{ menu_control('auto_exposure_bias', 'Auto Exposure Bias') }}
-    {{ menu_control('exposure_metering_mode', 'Exposure Metering Mode') }}
-    {{ bool_control('exposure_dynamic_framerate', 'Exposure Dynamic Framerate') }}
-    {{ slider_control('exposure_time_absolute', 'Exposure Time Absolute') }}
-    {{ slider_control('exposure_absolute', 'Exposure Time Absolute') }}
-    {{ slider_control('exposure', 'Exposure') }}
-    {{ menu_control('iso_sensitivity_auto', 'ISO Sensitivity Auto') }}
-    {{ menu_control('iso_sensitivity', 'ISO Sensitivity') }}
-    {{ bool_control('gain_automatic', 'Gain Auto') }}
-    {{ slider_control('gain', 'Gain') }}
-
-    {{ bool_control('focus_auto', 'Focus Auto') }}
-    {{ slider_control('focus_absolute', 'Focus Absolute') }}
-    {{ slider_control('zoom_absolute', 'Zoom Absolute') }}
-    {{ slider_control('tilt_absolute', 'Tilt Absolute') }}
-    {{ slider_control('pan_absolute', 'Pan Absolute') }}
-
-    {{ slider_control('sharpness', 'Sharpness') }}
-    {{ slider_control('brightness', 'Brightness') }}
-    {{ slider_control('contrast', 'Contrast') }}
-    {{ slider_control('saturation', 'Saturation') }}
-
-    {{ menu_control('color_effects', 'Color Effects') }}
-    {{ slider_control('color_effects_cbcr', 'Color Effects CB/CR') }}
-    {{ menu_control('white_balance_auto_preset', 'White Balance') }}
-    {{ bool_control('white_balance_temperature_auto', 'White Balance Auto') }}
-    {{ bool_control('white_balance_automatic', 'White Balance Auto') }}
-    {{ slider_control('white_balance_temperature', 'White Balance Temperature') }}
-    {{ slider_control('blue_balance', 'Blue Balance') }}
-    {{ slider_control('red_balance', 'Red Balance') }}
-    {{ slider_control('hue', 'Hue') }}
-    {{ slider_control('gamma', 'Gamma') }}
-
-    {{ slider_control('compression_quality', 'Compression Quality') }}
-
-    {{ menu_control('video_bitrate_mode', 'Video Bitrate Mode') }}
-    {{ slider_control('video_bitrate', 'Video Bitrate') }}
-
-    {{ bool_control('repeat_sequence_header', 'Repeat Sequence Header') }}
-    {{ slider_control('h264_i_frame_period', 'H.264 I-Frame Period')}}
-    {{ menu_control('h264_level', 'H.264 Level') }}
-    {{ menu_control('h264_profile', 'H.264 Profile') }}
-
-    <div class="row-fluid">
-        <div class="span12"><hr></div>
-    </div>
-
-    <div class="alert alter-block">
-        <strong>Note:</strong> these settings will not be saved unless you click 'Save' below.
-    </div>
-
-    <div class="row-fluid">
-        <div class="span4 text-right">Preset</div>
-        <div class="span5">
-            <input data-bind="value: presetName"></input>
-        </div>
-        <div class="span3">
-            <button style="width: 50%;" class="btn" data-bind="enable: presetName() !== undefined, click: savePreset"><i class="fas fa-download"></i></button>
+        <div class="alert alter-block" data-bind="visible: showUnkControlsWarning">
+            <strong>Warning:</strong> your camera has controls that have not been implemented yet. Please <a target="_blank" href="https://github.com/The-EG/OctoPrint-CameraSettings/issues/new?assignees=&labels=enhancement&template=missing-camera-controls.md&title=%5BFR%5D+Implement+Controls+for+%5BCamera+Name%5D">open an issue</a> and include the following information:
+            <br><br>
+            Camera Control Information: <button class="btn btn-primary" data-bind="click: copyUnkToClipboard"><i class="fas fa-copy"></i> Copy to Clipboard</button>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span4 text-right">
-            &nbsp;
-        </div>
-        <div class="span5">
-            <select size="3" data-bind="options: settings.settings.plugins.camerasettings.presets, optionsText: (preset) => preset.name, optionsValue: (preset) => preset.name, value: presetListName "></select>
-        </div>
-        <div class="span3">
-            <div><button style="width: 50%;" class="btn" data-bind="enable: presetListName() !== undefined, click: loadPreset"><i class="fas fa-upload"></i></button></div>
-            <div><button style="width: 50%;" class="btn" data-bind="enable: presetListName() !== undefined, click: deletePreset"><i class="fas fa-trash"></i></button></div>
-        </div>
-    </div>
+    <hr>
+    <div style="flex-grow: 1; overflow-y: auto;">
+        <div>
+            {{ bool_control('horizontal_flip', 'Horizontal Flip') }}
+            {{ bool_control('vertical_flip', 'Vertical Flip') }}
+            {{ slider_control('rotate', 'Rotation') }}
 
-    <div class="row-fluid">
-        <div class="span4 text-right">Load Preset on OctoPrint Startup</div>
-        <div class="span4">
-            <input type="checkbox" class="checkbox" data-bind="checked: settings.settings.plugins.camerasettings.load_preset_on_startup"></input>
+            {{ bool_control('image_stabilization', 'Image Stabilization') }}
+            {{ menu_control('power_line_frequency', 'Power Line Frequency') }}
+            {{ menu_control('scene_mode', 'Scene Mode') }}
+            {{ slider_control('backlight_compensation', 'Backlight Compensation') }}
+            {{ menu_control('auto_exposure', 'Auto Exposure') }}
+            {{ menu_control('exposure_auto', 'Auto Exposure') }}
+            {{ bool_control('exposure_auto_priority', 'Exposure Auto Priority') }}
+            {{ menu_control('auto_exposure_bias', 'Auto Exposure Bias') }}
+            {{ menu_control('exposure_metering_mode', 'Exposure Metering Mode') }}
+            {{ bool_control('exposure_dynamic_framerate', 'Exposure Dynamic Framerate') }}
+            {{ slider_control('exposure_time_absolute', 'Exposure Time Absolute') }}
+            {{ slider_control('exposure_absolute', 'Exposure Time Absolute') }}
+            {{ slider_control('exposure', 'Exposure') }}
+            {{ menu_control('iso_sensitivity_auto', 'ISO Sensitivity Auto') }}
+            {{ menu_control('iso_sensitivity', 'ISO Sensitivity') }}
+            {{ bool_control('gain_automatic', 'Gain Auto') }}
+            {{ slider_control('gain', 'Gain') }}
+
+            {{ bool_control('focus_auto', 'Focus Auto') }}
+            {{ slider_control('focus_absolute', 'Focus Absolute') }}
+            {{ slider_control('zoom_absolute', 'Zoom Absolute') }}
+            {{ slider_control('tilt_absolute', 'Tilt Absolute') }}
+            {{ slider_control('pan_absolute', 'Pan Absolute') }}
+
+            {{ slider_control('sharpness', 'Sharpness') }}
+            {{ slider_control('brightness', 'Brightness') }}
+            {{ slider_control('contrast', 'Contrast') }}
+            {{ slider_control('saturation', 'Saturation') }}
+
+            {{ menu_control('color_effects', 'Color Effects') }}
+            {{ slider_control('color_effects_cbcr', 'Color Effects CB/CR') }}
+            {{ menu_control('white_balance_auto_preset', 'White Balance') }}
+            {{ bool_control('white_balance_temperature_auto', 'White Balance Auto') }}
+            {{ bool_control('white_balance_automatic', 'White Balance Auto') }}
+            {{ slider_control('white_balance_temperature', 'White Balance Temperature') }}
+            {{ slider_control('blue_balance', 'Blue Balance') }}
+            {{ slider_control('red_balance', 'Red Balance') }}
+            {{ slider_control('hue', 'Hue') }}
+            {{ slider_control('gamma', 'Gamma') }}
+
+            {{ slider_control('compression_quality', 'Compression Quality') }}
+
+            {{ menu_control('video_bitrate_mode', 'Video Bitrate Mode') }}
+            {{ slider_control('video_bitrate', 'Video Bitrate') }}
+
+            {{ bool_control('repeat_sequence_header', 'Repeat Sequence Header') }}
+            {{ slider_control('h264_i_frame_period', 'H.264 I-Frame Period')}}
+            {{ menu_control('h264_level', 'H.264 Level') }}
+            {{ menu_control('h264_profile', 'H.264 Profile') }}
+
+            <div class="row-fluid">
+                <div class="span12"><hr></div>
+            </div>
+
+            <div class="alert alter-block">
+                <strong>Note:</strong> these settings will not be saved unless you click 'Save' below.
+            </div>
+
+            <div class="row-fluid">
+                <div class="span4 text-right">Preset</div>
+                <div class="span5">
+                    <input data-bind="value: presetName"></input>
+                </div>
+                <div class="span3">
+                    <button style="width: 50%;" class="btn" data-bind="enable: presetName() !== undefined, click: savePreset"><i class="fas fa-download"></i></button>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span4 text-right">
+                    &nbsp;
+                </div>
+                <div class="span5">
+                    <select
+                        size="3"
+                        data-bind="
+                            options: settings.settings.plugins.camerasettings.presets,
+                            optionsText: (preset) => preset.name,
+                            optionsValue: (preset) => preset.name,
+                            value: presetListName "></select>
+                </div>
+                <div class="span3">
+                    <div>
+                        <button style="width: 50%;" class="btn" data-bind="enable: presetListName() !== undefined, click: loadPreset">
+                            <i class="fas fa-upload"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <button style="width: 50%;" class="btn" data-bind="enable: presetListName() !== undefined, click: deletePreset">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="span4 text-right">Load Preset on OctoPrint Startup</div>
+                <div class="span4">
+                    <input type="checkbox" class="checkbox" data-bind="checked: settings.settings.plugins.camerasettings.load_preset_on_startup"></input>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span4 text-right">Startup Preset</div>
+                <div class="span4">
+                    <select data-bind="
+                        enable: settings.settings.plugins.camerasettings.load_preset_on_startup,
+                        options: settings.settings.plugins.camerasettings.presets,
+                        optionsText: (preset) => preset.name,
+                        optionsValue: (preset) => preset.name,
+                        value: settings.settings.plugins.camerasettings.startup_preset_name "></select>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span4 text-right">Startup Preset</div>
-        <div class="span4">
-            <select data-bind="
-                enable: settings.settings.plugins.camerasettings.load_preset_on_startup,
-                options: settings.settings.plugins.camerasettings.presets,
-                optionsText: (preset) => preset.name,
-                optionsValue: (preset) => preset.name,
-                value: settings.settings.plugins.camerasettings.startup_preset_name "></select>
-        </div>
-    </div>
-</div>
-</div>
 </div>

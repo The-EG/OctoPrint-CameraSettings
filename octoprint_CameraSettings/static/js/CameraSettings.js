@@ -181,6 +181,6 @@ $(function() {
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
         dependencies: ["settingsViewModel"],
         // Elements to bind to, e.g. #settings_plugin_CameraSettings, #tab_plugin_CameraSettings, ...
-        elements: [ '#tab_plugin_camerasettings', '#settings_plugin_camerasettings' ]
+        elements: [ '#settings_plugin_camerasettings' ]
     });
 });
