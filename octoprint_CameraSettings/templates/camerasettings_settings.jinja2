@@ -154,7 +154,7 @@
             <div class="row-fluid">
                 <div class="span4 text-right">Preset</div>
                 <div class="span5">
-                    <input data-bind="value: presetName"></input>
+                    <input data-bind="value: presetName">
                 </div>
                 <div class="span3">
                     <button style="width: 50%;" class="btn" data-bind="enable: presetName() !== undefined, click: savePreset"><i class="fas fa-download"></i></button>
@@ -190,7 +190,7 @@
             <div class="row-fluid">
                 <div class="span4 text-right">Load Preset on OctoPrint Startup</div>
                 <div class="span4">
-                    <input type="checkbox" class="checkbox" data-bind="checked: settings.settings.plugins.camerasettings.load_preset_on_startup"></input>
+                    <input type="checkbox" class="checkbox" data-bind="checked: settings.settings.plugins.camerasettings.load_preset_on_startup">
                 </div>
             </div>
             <div class="row-fluid">
@@ -202,6 +202,12 @@
                         optionsText: (preset) => preset.name,
                         optionsValue: (preset) => preset.name,
                         value: settings.settings.plugins.camerasettings.startup_preset_name "></select>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span4 text-right">Startup Preset Apply Count</div>
+                <div class="span4">
+                    <input type="number" data-bind="value: settings.settings.plugins.camerasettings.startup_preset_apply_count">
                 </div>
             </div>
         </div>

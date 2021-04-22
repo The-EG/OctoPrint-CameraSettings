@@ -23,3 +23,9 @@ If you've recieved an error stating 'v4l2-ctl not installed' see [v4l-utils in s
 ## I get an error: 'v4l2-ctl not installed'
 
 See [v4l-utils in setup](setup.md#v4l-utils).
+
+## Not all settings are applied on on startup
+
+Some settings can only be set after other settings meet certain conditions. For example, on some cameras exposure time can only be set if exposure auto is off. Unfortunately, the plugin has no way of knowing these dependecies, but it is possible to load a preset multiple times on startup to work around this.
+
+This can be done by changing the 'Startup Preset Apply Count' number in the plugin settings to 2 or more.

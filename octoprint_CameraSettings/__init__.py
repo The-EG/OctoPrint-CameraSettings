@@ -60,7 +60,8 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			],
 			presets=[],
 			load_preset_on_startup=False,
-			startup_preset_name=None
+			startup_preset_name=None,
+			startup_preset_apply_count=1
 		)
 
 	def exclude_camera(self, name):
@@ -74,8 +75,9 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 	def on_after_startup(self):
 		if self._settings.get_boolean(['load_preset_on_startup']):
 			name = self._settings.get(['startup_preset_name'])
-			self._logger.info('Loading {0} preset'.format(name))
-			t = threading.Thread(target=self.do_load_preset, args=(name,))
+			count = self._settings.get_int(['startup_preset_apply_count'])
+			self._logger.info('Loading {0} preset, applying {1} time(s)'.format(name, count))
+			t = threading.Thread(target=self.do_load_preset, args=(name, count))
 			t.start()
 
 	##~~ SimpleApi mixin
@@ -97,24 +99,26 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 		elif command == 'load_preset':
 			self.do_load_preset(data['name'])
 
-	def do_load_preset(self, name):
+	def do_load_preset(self, name, count=1):
 		presets = self._settings.get(['presets'])
 		preset = None
 		for p in presets:
 			if p['name']==name: preset = p
 		
 		if preset is None: return
-		self.do_set_camera_controls(p['camera'], p['controls'], False)
+		self.do_set_camera_controls(p['camera'], p['controls'], False, count)
 
 
-	def do_set_camera_controls(self, device, controls, send_list=True):
+	def do_set_camera_controls(self, device, controls, send_list=True, count=1):
 		ctrl_args = []
 		for control in controls:
 			ctrl_args.append('{0}={1}'.format(control, controls[control]))
-		try:
-			subprocess.check_output(['v4l2-ctl','-d','/dev/{0}'.format(device),'--set-ctrl',','.join(ctrl_args)])
-		except subprocess.CalledProcessError as er:
-			self._logger.warning('Error running v42l-ctl: {0}'.format(er.output))
+
+		for _ in range(count):
+			try:
+				subprocess.check_output(['v4l2-ctl','-d','/dev/{0}'.format(device),'--set-ctrl',','.join(ctrl_args)])
+			except subprocess.CalledProcessError as er:
+				self._logger.warning('Error running v42l-ctl: {0}'.format(er.output))
 
 		if send_list: self.do_camera_control_list_event(device)
 
