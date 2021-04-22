@@ -80,15 +80,17 @@
                 </label>
             </div>
         </div>
-        <div class="alert alter-block" data-bind="visible: showUnkControlsWarning">
-            <strong>Warning:</strong> your camera has controls that have not been implemented yet. Please <a target="_blank" href="https://github.com/The-EG/OctoPrint-CameraSettings/issues/new?assignees=&labels=enhancement&template=missing-camera-controls.md&title=%5BFR%5D+Implement+Controls+for+%5BCamera+Name%5D">open an issue</a> and include the following information:
-            <br><br>
-            Camera Control Information: <button class="btn btn-primary" data-bind="click: copyUnkToClipboard"><i class="fas fa-copy"></i> Copy to Clipboard</button>
-        </div>
+        
     </div>
     <hr>
     <div style="flex-grow: 1; overflow-y: auto;">
-        <div>
+            <div>
+                <div class="alert alter-block" data-bind="visible: showUnkControlsWarning">
+                <strong>Warning:</strong> your camera has controls that have not been implemented yet. Please <a target="_blank" href="https://github.com/The-EG/OctoPrint-CameraSettings/issues/new?assignees=&labels=enhancement&template=missing-camera-controls.md&title=%5BFR%5D+Implement+Controls+for+%5BCamera+Name%5D">open an issue</a> and include the following information:
+                <br><br>
+                Camera Control Information: <button class="btn btn-primary" data-bind="click: copyUnkToClipboard"><i class="fas fa-copy"></i> Copy to Clipboard</button>
+            </div>
+
             {{ bool_control('horizontal_flip', 'Horizontal Flip') }}
             {{ bool_control('vertical_flip', 'Vertical Flip') }}
             {{ slider_control('rotate', 'Rotation') }}
