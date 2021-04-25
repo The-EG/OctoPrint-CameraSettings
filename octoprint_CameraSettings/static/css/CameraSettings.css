@@ -1,11 +1,43 @@
-/* TODO: Have your plugin's CSS files generated to here. */
 
-div.camera-settings-outer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+#settings_plugin_camerasettings
+{
+	position: relative;
+	margin-right: 10px;
 }
 
-#settings_plugin_camerasettings {
-    height: 100%;
+#settings_plugin_camerasettings .camPreviewContainer
+{
+	background-color: #000;
+	resize: both;
+	overflow: auto;
+	height: 250px;
+	width: 100%;
+	max-width: 100%;
+	max-height: 500px;
+}
+
+#settings_plugin_camerasettings .camPreview
+{
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+#settings_plugin_camerasettings .alert
+{
+	margin-top: 10px;
+}
+
+#settings_plugin_camerasettings .camMainSettings
+{
+	min-height: 200px;
+	overflow: auto;
+	resize: vertical;
+	height: 25vh;
+}
+
+#settings_plugin_camerasettings .camMainSettings div.control-group
+{
+	height: auto !important;
+	margin-bottom: 10px;
 }
