@@ -64,6 +64,7 @@ $(function() {
             hue: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             gamma: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             focus_auto: { use: ko.observable(false), value: ko.observable(undefined) },
+            privacy: { use: ko.observable(false), value: ko.observable(undefined) },
         };
 
         self.shouldUpdateSettings = false;
