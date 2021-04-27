@@ -1,4 +1,6 @@
 # OctoPrint-CameraSettings
+[![GitHub release](https://img.shields.io/github/v/release/The-EG/OctoPrint-CameraSettings)](https://github.com/The-EG/OctoPrint-CameraSettings/releases/latest) [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/The-EG/OctoPrint-CameraSettings?include_prereleases&label=pre-release)](https://github.com/The-EG/OctoPrint-CameraSettings/releases)
+
 
 Camera Settings allows a user to interactively change camera settings by running `v4l2-ctl` on the backend. This method should work for any Linux environment, including OctoPi, as long as the camera is attached to the same device running OctoPrint.
 
