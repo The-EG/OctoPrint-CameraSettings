@@ -189,7 +189,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         # Plugin here. See https://docs.octoprint.org/en/master/bundledplugins/softwareupdate.html
         # for details.
         return dict(
-            CameraSettings=dict(
+            camerasettings=dict(
                 displayName="Camera Settings",
                 displayVersion=self._plugin_version,
 
@@ -230,6 +230,12 @@ __plugin_name__ = "Camera Settings"
 #__plugin_pythoncompat__ = ">=2.7,<3" # only python 2
 __plugin_pythoncompat__ = ">=3,<4" # only python 3
 #__plugin_pythoncompat__ = ">=2.7,<4" # python 2 and 3
+
+def __plugin_check__():
+    import sys
+    # Py3.3+ linux is always linux, before that linux may be linux, linux2, linux3, etc
+    if not sys.platform.startswith('linux'): return False
+    return True
 
 def __plugin_load__():
     global __plugin_implementation__
