@@ -19,7 +19,8 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
                            octoprint.plugin.TemplatePlugin):
     def get_camera_ctrls(self, device):
         ctrls = {}
-        v4l2_list_ctrls = subprocess.check_output(['v4l2-ctl','-d',os.path.join('/dev',device),'--list-ctrls-menus']).decode('utf-8').split('\n')
+        self._logger.debug("Getting controls for {0}".format(device))
+        v4l2_list_ctrls = subprocess.check_output(['v4l2-ctl','-d',os.path.join('/dev',device),'--list-ctrls-menus'], stderr=subprocess.STDOUT).decode('utf-8').split('\n')
         last_ctrl = None
         last_ctrl_is_menu = False
         for line in v4l2_list_ctrls:
@@ -44,7 +45,6 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             if m.group('value'): ctrl['value'] = m.group('value')
             if m.group('flags'): ctrl['flags'] = m.group('flags')
             ctrls[m.group('name')] = ctrl
-
         return ctrls
         
 
@@ -99,6 +99,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             self.do_load_preset(data['name'])
 
     def do_load_preset(self, name, count=1):
+        self._logger.debug("Loading preset {0}".format(name))
         presets = self._settings.get(['presets'])
         preset = None
         for p in presets:
@@ -112,17 +113,20 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         ctrl_args = []
         for control in controls:
             ctrl_args.append('{0}={1}'.format(control, controls[control]))
-
+        self._logger.debug("Setting controls on {0}".format(device))
+        self._logger.debug("Controls: {0}".format(ctrl_args))
         for _ in range(count):
             try:
-                subprocess.check_output(['v4l2-ctl','-d','/dev/{0}'.format(device),'--set-ctrl',','.join(ctrl_args)])
+                out = subprocess.check_output(['v4l2-ctl','-k','--verbose','-d','/dev/{0}'.format(device),'--set-ctrl',','.join(ctrl_args)], stderr=subprocess.STDOUT)
+                self._logger.debug("v4l2-ctl ran successfully:\n{0}".format(out.decode('utf-8')))
             except subprocess.CalledProcessError as er:
-                self._logger.warning('Error running v42l-ctl: {0}'.format(er.output))
+                self._logger.warning('Error running v42l-ctl:\n{0}'.format(er.output.decode('utf-8')))
 
         if send_list: self.do_camera_control_list_event(device)
 
     
     def do_cameras_list_event(self):
+        self._logger.debug("Building camera list")
         # pylint: disable=no-member
         event = octoprint.events.Events.PLUGIN_CAMERASETTINGS_CAMERAS_LIST
         try:
@@ -143,13 +147,14 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             for dev in video_ctrls:
                 if len(video_ctrls[dev])==0: del video_devices[dev]
 
-            
+            self._logger.debug("Cameras found: {0}".format([{'device': d, 'camera': video_devices[d]} for d in video_devices]))
             self._event_bus.fire(event, payload={'cameras': [{'device': d, 'camera': video_devices[d]} for d in video_devices]})
         except FileNotFoundError:
             self._logger.error("/sys/class/video4linux does not exist. Can't get camera devices. Are you sure this is linux?")
             self._event_bus.fire(event, payload={'error': "/sys/class/video4linux does not exist. Can't get camera devices."})
 
     def do_camera_control_list_event(self,device):
+        self._logger.debug("Sending camera control list event")
         # pylint: disable=no-member
         event = octoprint.events.Events.PLUGIN_CAMERASETTINGS_CAMERA_CONTROL_LIST
         try:
