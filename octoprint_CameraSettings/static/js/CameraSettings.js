@@ -45,8 +45,11 @@ $(function() {
             compression_quality: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             exposure_time_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             exposure_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            exposure: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             exposure_metering_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             horizontal_flip: { use: ko.observable(false), value: ko.observable(undefined) },
+            white_balance_automatic: { use: ko.observable(false), value: ko.observable(undefined) },
+            gain_automatic: { use: ko.observable(false), value: ko.observable(undefined) },
             vertical_flip: { use: ko.observable(false), value: ko.observable(undefined) },
             rotate: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             h264_i_frame_period: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
@@ -61,6 +64,7 @@ $(function() {
             hue: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             gamma: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             focus_auto: { use: ko.observable(false), value: ko.observable(undefined) },
+            privacy: { use: ko.observable(false), value: ko.observable(undefined) },
         };
 
         self.shouldUpdateSettings = false;
@@ -80,7 +84,6 @@ $(function() {
         }
 
         self.savePreset = function() {
-            console.log(self.settings.settings.plugins.camerasettings.presets());
             var controls = {};
             for (var ctrl in self.controls) {
                 if (self.controls[ctrl].use()) {
@@ -89,7 +92,6 @@ $(function() {
             }
             self.deletePresetByName(self.presetName());
             self.settings.settings.plugins.camerasettings.presets.push({name: ko.observable(self.presetName()), camera: ko.observable(self.selectedDevice()), controls: controls});
-            console.log(self.settings.settings.plugins.camerasettings.presets());
         }
 
         self.deletePresetByName = function(name) {
@@ -112,43 +114,55 @@ $(function() {
         }
 
         self.onEventplugin_camerasettings_cameras_list = function(payload) {
-            self.cameras(payload.cameras);
+            if (payload.cameras) {
+                self.cameras(payload.cameras);
+            }
+            if (payload.error) {
+                new PNotify({title:'Camera Settings', text: payload.error, type: 'error', hide: false});
+            }
         }
 
         self.onEventplugin_camerasettings_camera_control_list = function(payload) {
-            console.log('Got camera controls:');
-            console.log(payload);
-            var controls = payload.controls;
 
-            self.shouldUpdateSettings = false;
-            for(var control in self.controls) {
-                if (control in controls) {
-                    self.controls[control].use(true);
-                    if (self.controls[control].values) self.controls[control].values(controls[control].values);
-                    if (self.controls[control].min) self.controls[control].min(controls[control].min);
-                    if (self.controls[control].max) self.controls[control].max(controls[control].max);
-                    if (self.controls[control].step) self.controls[control].step(controls[control].step);
-                    if (controls[control].type==='bool') {
-                        self.controls[control].value(controls[control].value==='1' ? true : false);
+            if (payload.controls) {
+                var controls = payload.controls;
+
+                self.shouldUpdateSettings = false;
+                for(var control in self.controls) {
+                    if (control in controls) {
+                        self.controls[control].use(true);
+                        if (self.controls[control].values) self.controls[control].values(controls[control].values);
+                        if (self.controls[control].min) self.controls[control].min(controls[control].min);
+                        if (self.controls[control].max) self.controls[control].max(controls[control].max);
+                        if (self.controls[control].step) self.controls[control].step(controls[control].step);
+                        if (controls[control].type==='bool') {
+                            self.controls[control].value(controls[control].value==='1' ? true : false);
+                        } else {
+                            self.controls[control].value(controls[control].value);
+                        }
                     } else {
-                        self.controls[control].value(controls[control].value);
+                        self.controls[control].use(false);
                     }
-                } else {
-                    self.controls[control].use(false);
                 }
-            }
-            self.shouldUpdateSettings = true;
+                self.shouldUpdateSettings = true;
 
-            self.unknownControls = {};
-            self.showUnkControlsWarning(false);
-            for (var control in controls) {
-                if (!(control in self.controls)) {
-                    self.unknownControls[control] = controls[control];
-                    self.showUnkControlsWarning(true);
+                self.unknownControls = {};
+                self.showUnkControlsWarning(false);
+                for (var control in controls) {
+                    if (!(control in self.controls)) {
+                        self.unknownControls[control] = controls[control];
+                        self.showUnkControlsWarning(true);
+                    }
                 }
             }
-            console.log(`Unknown controls:`);
-            console.log(self.unknownControls);
+
+            if (payload.error) {
+                new PNotify({
+                    title:'Camera Settings', 
+                    text: `Could not load camera controls:<br><span style="font-style: italic;">${payload.error}</span>`,
+                    type: 'error',
+                    hide: false});
+            }
         }
 
         self.copyUnkToClipboard = function() {
@@ -184,6 +198,6 @@ $(function() {
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
         dependencies: ["settingsViewModel"],
         // Elements to bind to, e.g. #settings_plugin_CameraSettings, #tab_plugin_CameraSettings, ...
-        elements: [ '#tab_plugin_camerasettings', '#settings_plugin_camerasettings' ]
+        elements: [ '#settings_plugin_camerasettings' ]
     });
 });
