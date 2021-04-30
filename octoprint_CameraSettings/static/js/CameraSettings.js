@@ -62,14 +62,17 @@ $(function() {
             tilt_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             tilt_speed: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             focus_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            focus: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             zoom_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             hue: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             hue_auto: { use: ko.observable(false), value: ko.observable(undefined) },
             gamma: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             focus_auto: { use: ko.observable(false), value: ko.observable(undefined) },
             privacy: { use: ko.observable(false), value: ko.observable(undefined) },
+            disable_video_processing: { use: ko.observable(false), value: ko.observable(undefined) },
             led1_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             led1_frequency: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            raw_bits_per_pixel: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             zoom_continuous: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
         };
 

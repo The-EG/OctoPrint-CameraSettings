@@ -92,6 +92,7 @@
 
     {{ bool_control('focus_auto', 'Focus Auto') }}
     {{ slider_control('focus_absolute', 'Focus Absolute') }}
+    {{ slider_control('focus', 'Focus') }}
     {{ slider_control('zoom_absolute', 'Zoom Absolute') }}
     {{ slider_control('zoom_continuous', 'Zoom Continuous') }}
     {{ slider_control('tilt_absolute', 'Tilt Absolute') }}
@@ -129,6 +130,10 @@
 
     {{ menu_control('led1_mode', 'LED Mode') }}
     {{ slider_control('led1_frequency', 'LED Blink Frequency') }}
+
+    {{ slider_control('raw_bits_per_pixel', 'Raw Bits Per Pixel') }}
+
+    {{ bool_control('disable_video_processing', 'Disable Video Processing') }}
 </div>
 <hr>
 
