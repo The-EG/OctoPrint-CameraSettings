@@ -68,6 +68,7 @@ $(function() {
             privacy: { use: ko.observable(false), value: ko.observable(undefined) },
             led1_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             led1_frequency: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            zoom_continuous: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
         };
 
         self.shouldUpdateSettings = false;
