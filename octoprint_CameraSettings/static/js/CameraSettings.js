@@ -78,18 +78,22 @@ $(function() {
 
         self.shouldUpdateSettings = false;
 
-        for (control in self.controls) {
-            self.controls[control].value.subscribe( () => {
-                if (self.shouldUpdateSettings) {
-                    var ctrls = {};
-                    for (control in self.controls){
-                        var val = self.controls[control].value();
-                        if (typeof val === 'boolean') val = val ? '1' : '0';
-                        if (self.controls[control].use()) ctrls[control] = val;
-                    }
-                    OctoPrint.simpleApiCommand('camerasettings', 'set_camera_controls', {camera: self.selectedDevice(), controls: ctrls});   
-                }
-            })
+        for (var control in self.controls) {
+            var updateControl = function(ctrlName) {
+                return () => self.sendSetControl(ctrlName);
+            }
+
+            self.controls[control].value.subscribe(updateControl(control));
+        }
+
+        self.sendSetControl = function(control) {
+            if (self.shouldUpdateSettings) {
+                var ctrls = {};
+                var val = self.controls[control].value();
+                if (typeof val === 'boolean') val = val ? '1' : '0';
+                if (self.controls[control].use()) ctrls[control] = val;
+                OctoPrint.simpleApiCommand('camerasettings', 'set_camera_controls', {camera: self.selectedDevice(), controls: ctrls})
+            }
         }
 
         self.savePreset = function() {
