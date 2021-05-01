@@ -108,7 +108,6 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         if preset is None: return
         self.do_set_camera_controls(p['camera'], p['controls'], False, count)
 
-
     def do_set_camera_controls(self, device, controls, send_list=True, count=1):
         ctrl_args = []
         for control in controls:
@@ -116,11 +115,19 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         self._logger.debug("Setting controls on {0}".format(device))
         self._logger.debug("Controls: {0}".format(ctrl_args))
         for _ in range(count):
-            try:
-                out = subprocess.check_output(['v4l2-ctl','-k','--verbose','-d','/dev/{0}'.format(device),'--set-ctrl',','.join(ctrl_args)], stderr=subprocess.STDOUT)
-                self._logger.debug("v4l2-ctl ran successfully:\n{0}".format(out.decode('utf-8')))
-            except subprocess.CalledProcessError as er:
-                self._logger.warning('Error running v42l-ctl:\n{0}'.format(er.output.decode('utf-8')))
+            for control in controls:
+                    self._logger.debug("Setting {0} = {1} on {2}".format(control, controls[control], device))
+                    try:
+                        out = subprocess.check_output(
+                            ['v4l2-ctl',
+                             '-k',
+                             '--verbose',
+                             '-d', '/dev/{0}'.format(device),
+                             '--set-ctr', '{0}={1}'.format(control, controls[control])],
+                            stderr=subprocess.STDOUT)
+                        self._logger.debug("v4l2-ctl ran successfully:\n{0}".format(out.decode('utf-8')))
+                    except subprocess.CalledProcessError as er:
+                        self._logger.warning('Error setting {0}:\n{1}'.format(control, er.output.decode('utf-8')))
 
         if send_list: self.do_camera_control_list_event(device)
 
