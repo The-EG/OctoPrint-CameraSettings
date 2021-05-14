@@ -60,7 +60,9 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             presets=[],
             load_preset_on_startup=False,
             startup_preset_name=None,
-            startup_preset_apply_count=1
+            startup_preset_apply_count=1,
+            multicam_support=False,
+            multicam_mapping=[]
         )
 
     def exclude_camera(self, name):
@@ -153,6 +155,16 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 
             for dev in video_ctrls:
                 if len(video_ctrls[dev])==0: del video_devices[dev]
+
+            cam_names = [video_devices[d] for d in video_devices]
+            cam_map = self._settings.get(['multicam_mapping'])
+            for cam in cam_names:
+                if len([x for x in cam_map if x['camera']==cam])==0: cam_map.append({'camera': cam, 'multicam': None})
+            
+            for c in range(len(cam_map)):
+                if (cam_map[c]['camera'] not in cam_names): del cam_map[c]
+            
+            self._settings.set(['multicam_mapping'], cam_map)
 
             self._logger.debug("Cameras found: {0}".format([{'device': d, 'camera': video_devices[d]} for d in video_devices]))
             self._event_bus.fire(event, payload={'cameras': [{'device': d, 'camera': video_devices[d]} for d in video_devices]})

@@ -46,7 +46,7 @@
     <div class="span8">
         <div class="camPreviewContainerOuter" data-bind="visible: settings.settings.plugins.camerasettings.show_preview">
             <div class="camPreviewContainer">
-                <img data-bind="attr: { src: cameraSrc }, style: { transform: `scaleX(${settings.settings.webcam.flipH() ? -1: 1}) scaleY(${settings.settings.webcam.flipV() ? -1: 1})`}" class="camPreview">
+                <img data-bind="attr: { src: cameraSrc }, style: { transform: `rotate(${cameraRot90() ? '-90deg': '0deg'}) scaleX(${cameraFlipH() ? -1: 1}) scaleY(${cameraFlipV() ? -1: 1})`}" class="camPreview">
             </div>
         </div>
     </div>
@@ -185,4 +185,28 @@
     <div class="span4">
         <input type="number" data-bind="value: settings.settings.plugins.camerasettings.startup_preset_apply_count">
     </div>
+</div>
+<hr>
+<div class="row-fluid">
+    <div class="span4 text-right">OctoPrint-MultiCam Integration</div>
+    <div class="span4">
+        <input type="checkbox" class="checkbox" data-bind="checked: settings.settings.plugins.camerasettings.multicam_support, enable: settings.settings.plugins.multicam !== undefined">
+    </div>
+</div>
+
+
+<div data-bind="foreach: {data: settings.settings.plugins.camerasettings.multicam_mapping, as: 'mapping', noChildContext: true}, visible: settings.settings.plugins.multicam !== undefined">
+
+<div class="row-fluid">
+    <div class="span4 text-right" data-bind="text: mapping.camera"></div>
+    <div class="span4">
+        <select data-bind=",
+            options: settings.settings.plugins.multicam.multicam_profiles,
+            optionsText: (profile) => profile.name,
+            optionsValue: (profile) => profile.name,
+            value: mapping.multicam,
+            valueAllowUnset: true "></select>
+    </div>
+</div>
+
 </div>
