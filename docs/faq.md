@@ -29,3 +29,7 @@ See [v4l-utils in setup](setup.md#v4l-utils).
 Some settings can only be set after other settings meet certain conditions. For example, on some cameras exposure time can only be set if exposure auto is off. Unfortunately, the plugin has no way of knowing these dependecies, but it is possible to load a preset multiple times on startup to work around this.
 
 This can be done by changing the 'Startup Preset Apply Count' number in the plugin settings to 2 or more.
+
+## I have multiple cameras but the preview doesn't change when I select a different camera in the dropdown
+
+The preview shown is the same stream that is configured in OctoPrint. If you have multiple cameras, you may also want to use the [MultiCam](https://plugins.octoprint.org/plugins/multicam/) plugin. If that plugin is installed, Camera Settings will detect it and allow you to link the cameras detected to profiles defined in MultiCam. If `OctoPrint-MultiCam Integration` is enabled, the preview shown will use the settings in the appropriate profile, allowing you to view the preview for multiple cameras.
