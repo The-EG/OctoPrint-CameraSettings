@@ -9,6 +9,9 @@ $(function() {
         var self = this;
         self.settings = parameters[0]
         self.cameraSrc = ko.observable(undefined);
+        self.cameraFlipV = ko.observable(false);
+        self.cameraFlipH = ko.observable(false);
+        self.cameraRot90 = ko.observable(false);
 
         self.selectedDevice = ko.observable(undefined);
         self.cameras = ko.observableArray([]);
@@ -95,6 +98,7 @@ $(function() {
                 OctoPrint.simpleApiCommand('camerasettings', 'set_camera_controls', {camera: self.selectedDevice(), controls: ctrls})
             }
         }
+
 
         self.savePreset = function() {
             var controls = {};
@@ -188,17 +192,74 @@ $(function() {
             new PNotify({title:'Camera Settings', text: 'Unknown Controls Details Copied to Clipboard', type: 'success'});
         }
 
+        self.getCameraProfile = function() {
+            if (self.settings.settings.plugins.multicam===undefined || !self.settings.settings.plugins.camerasettings.multicam_support()) {
+                return undefined;
+            }
+
+            var mcProfiles = self.settings.settings.plugins.multicam.multicam_profiles();
+            var mapping = self.settings.settings.plugins.camerasettings.multicam_mapping();
+
+            var camName = undefined;            
+
+            for(var c in self.cameras()) {
+                if (self.cameras()[c].device===self.selectedDevice()) {
+                    camName = self.cameras()[c].camera;
+                    break;
+                }
+            }
+
+            if ( camName===undefined) return undefined;
+
+            var mcName = undefined;
+
+            for(var p in mapping) {
+                if(mapping[p].camera()==camName) {
+                    mcName = mapping[p].multicam();
+                    break;
+                }
+            }
+
+
+            if (mcName===undefined) return undefined;
+
+            for (var p in mcProfiles) {
+                if (mcProfiles[p].name()===mcName) return mcProfiles[p];
+            }
+
+            return undefined;
+        }
+
         self.onSettingsShown = function() {
             OctoPrint.simpleApiCommand('camerasettings', 'get_cameras');
-            self.cameraSrc(self.settings.settings.webcam.streamUrl());
+            //self.cameraSrc(self.settings.settings.webcam.streamUrl());
+            self.setupStreamPreview();
         }
 
         self.onSettingsHidden = function() {
             self.cameraSrc(undefined);
         }
 
+        self.setupStreamPreview = function() {
+            var profile = self.getCameraProfile();
+            if (profile===undefined) {
+                self.cameraSrc(self.settings.settings.webcam.streamUrl());
+                self.cameraFlipH(self.settings.settings.webcam.flipH());
+                self.cameraFlipV(self.settings.settings.webcam.flipV());
+                self.cameraRot90(self.settings.settings.webcam.rotate90());
+            } else {
+                self.cameraSrc(undefined);
+                self.cameraFlipH(profile.flipH());
+                self.cameraFlipV(profile.flipV());
+                self.cameraRot90(profile.rotate90());
+                self.cameraSrc(profile.URL());
+            }
+        }
+
         self.selectedDevice.subscribe(function(newValue) {
-            OctoPrint.simpleApiCommand('camerasettings', 'get_camera_controls', {camera: self.selectedDevice()});            
+            OctoPrint.simpleApiCommand('camerasettings', 'get_camera_controls', {camera: self.selectedDevice()});   
+
+            self.setupStreamPreview();
         });
     }
 
