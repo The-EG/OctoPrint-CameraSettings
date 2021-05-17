@@ -32,6 +32,7 @@ $(function() {
             scene_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             white_balance_auto_preset: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             white_balance_temperature_auto: { use: ko.observable(false), value: ko.observable(undefined) },
+            white_balance_component_auto: { use: ko.observable(false), value: ko.observable(undefined) },
             white_balance_temperature: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             video_bitrate_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             video_bitrate: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
@@ -39,6 +40,8 @@ $(function() {
             image_stabilization: { use: ko.observable(false), value: ko.observable(undefined) },
             blue_balance: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             red_balance: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            white_balance_blue_component: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            white_balance_red_component: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             brightness: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             sharpness: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             contrast: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
@@ -77,6 +80,8 @@ $(function() {
             led1_frequency: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             raw_bits_per_pixel: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             zoom_continuous: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            iris_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            iris_relative: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
         };
 
         self.shouldUpdateSettings = false;
