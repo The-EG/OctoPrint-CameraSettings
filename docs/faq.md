@@ -29,3 +29,7 @@ See [v4l-utils in setup](setup.md#v4l-utils).
 Some settings can only be set after other settings meet certain conditions. For example, on some cameras exposure time can only be set if exposure auto is off. Unfortunately, the plugin has no way of knowing these dependecies, but it is possible to load a preset multiple times on startup to work around this.
 
 This can be done by changing the 'Startup Preset Apply Count' number in the plugin settings to 2 or more.
+
+## This plugin doesn't show up in the Plugin Manager or I tried to install it manually and I get an error: ERROR: Package 'OctoPrint-CameraSettings' requires a different Python: 2.7.16 not in '>=3, <4'
+
+You are running Python 2 and this plugin only supports Python 3. See https://octoprint.org/blog/2020/09/10/upgrade-to-py3/
