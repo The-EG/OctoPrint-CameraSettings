@@ -111,6 +111,8 @@
     {{ bool_control('white_balance_temperature_auto', 'White Balance Auto') }}
     {{ bool_control('white_balance_component_auto', 'White Balance Component Auto') }}
     {{ slider_control('white_balance_temperature', 'White Balance Temperature') }}
+    {{ slider_control('auto_white_balance_speed', 'Auto White Balance Speed') }}
+    {{ slider_control('auto_white_balance_delay', 'Auto White Balance Delay') }}
     {{ slider_control('blue_balance', 'Blue Balance') }}
     {{ slider_control('red_balance', 'Red Balance') }}
     {{ slider_control('white_balance_blue_component', 'Blue Balance') }}
@@ -118,6 +120,12 @@
     {{ bool_control('hue_auto', 'Hue Auto') }}
     {{ slider_control('hue', 'Hue') }}
     {{ slider_control('gamma', 'Gamma') }}
+
+    {{ bool_control('auto_contour', 'Auto Contour') }}
+    {{ slider_control('contour', 'Contour') }}
+
+    {{ slider_control('dynamic_noise_reduction', 'Dynamic Noise Reduction') }}
+
 
     {{ slider_control('compression_quality', 'Compression Quality') }}
 
@@ -137,6 +145,8 @@
     {{ slider_control('raw_bits_per_pixel', 'Raw Bits Per Pixel') }}
 
     {{ bool_control('disable_video_processing', 'Disable Video Processing') }}
+
+    {{ bool_control('band_stop_filter', 'Band Stop Filter') }}
 
     {{ slider_control('iris_absolute', 'Iris Absolute') }}
     {{ slider_control('iris_relative', 'Iris Relative') }}
