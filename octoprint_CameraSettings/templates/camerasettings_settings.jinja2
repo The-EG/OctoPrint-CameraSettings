@@ -59,6 +59,12 @@
         <div class="control-group">
             <select class="pull-right" id="camerasettings-device" data-bind="value: selectedDevice, options: cameras, optionsText: (camera) => camera.camera, optionsValue: (camera) => camera.device" ></select>
         </div>
+        <div class="control-group">
+            <button class="btn" data-bind="click: restoreDefaults">
+                <i class="fas fa-undo"></i>
+                <span>Restore Defaults</span>
+            </button>
+        </div>
     </div>
 </div>
 <div class="alert alert-error" data-bind="visible: showUnkControlsWarning">

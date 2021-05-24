@@ -87,6 +87,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             'get_cameras': [],
             'get_camera_controls': ['camera'],
             'set_camera_controls': ['camera', 'controls'],
+            'restore_defaults': ['camera'],
             'load_preset': ['name']
         }
 
@@ -99,6 +100,8 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             self.do_set_camera_controls(data['camera'], data['controls'])
         elif command == 'load_preset':
             self.do_load_preset(data['name'])
+        elif command == 'restore_defaults':
+            self.do_restore_defaults(data['camera'])
 
     def do_load_preset(self, name, count=1):
         self._logger.debug("Loading preset {0}".format(name))
@@ -109,6 +112,12 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         
         if preset is None: return
         self.do_set_camera_controls(p['camera'], p['controls'], False, count)
+
+    def do_restore_defaults(self, device):
+        self._logger.debug("Restoring defaults on{0}".format(device))
+        ctrls = self.get_camera_ctrls(device)
+        controls = {x: ctrls[x]['default'] for x in ctrls if 'default' in ctrls[x] }
+        self.do_set_camera_controls(device, controls)
 
     def do_set_camera_controls(self, device, controls, send_list=True, count=1):
         ctrl_args = []

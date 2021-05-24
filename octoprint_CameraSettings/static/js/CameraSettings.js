@@ -110,6 +110,10 @@ $(function() {
             }
         }
 
+        self.restoreDefaults = function() {
+            OctoPrint.simpleApiCommand('camerasettings','restore_defaults', {camera: self.selectedDevice()} );
+        }
+
 
         self.savePreset = function() {
             var controls = {};
