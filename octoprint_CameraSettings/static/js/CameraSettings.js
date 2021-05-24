@@ -159,6 +159,8 @@ $(function() {
                         if (self.controls[control].step) self.controls[control].step(controls[control].step);
                         if (controls[control].type==='bool') {
                             self.controls[control].value(controls[control].value==='1' ? true : false);
+                        } else if (controls[control].type==='button') {
+                            continue; // ignore 'button' controls for now  
                         } else {
                             self.controls[control].value(controls[control].value);
                         }
