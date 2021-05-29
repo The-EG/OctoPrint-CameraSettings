@@ -60,7 +60,9 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             presets=[],
             load_preset_on_startup=False,
             startup_preset_name=None,
-            startup_preset_apply_count=1
+            startup_preset_apply_count=1,
+            multicam_support=False,
+            multicam_mapping=[]
         )
 
     def exclude_camera(self, name):
@@ -85,6 +87,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             'get_cameras': [],
             'get_camera_controls': ['camera'],
             'set_camera_controls': ['camera', 'controls'],
+            'restore_defaults': ['camera'],
             'load_preset': ['name']
         }
 
@@ -97,6 +100,8 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
             self.do_set_camera_controls(data['camera'], data['controls'])
         elif command == 'load_preset':
             self.do_load_preset(data['name'])
+        elif command == 'restore_defaults':
+            self.do_restore_defaults(data['camera'])
 
     def do_load_preset(self, name, count=1):
         self._logger.debug("Loading preset {0}".format(name))
@@ -107,6 +112,12 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         
         if preset is None: return
         self.do_set_camera_controls(p['camera'], p['controls'], False, count)
+
+    def do_restore_defaults(self, device):
+        self._logger.debug("Restoring defaults on{0}".format(device))
+        ctrls = self.get_camera_ctrls(device)
+        controls = {x: ctrls[x]['default'] for x in ctrls if 'default' in ctrls[x] }
+        self.do_set_camera_controls(device, controls)
 
     def do_set_camera_controls(self, device, controls, send_list=True, count=1):
         ctrl_args = []
@@ -153,6 +164,16 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
 
             for dev in video_ctrls:
                 if len(video_ctrls[dev])==0: del video_devices[dev]
+
+            cam_names = [video_devices[d] for d in video_devices]
+            cam_map = self._settings.get(['multicam_mapping'])
+            for cam in cam_names:
+                if len([x for x in cam_map if x['camera']==cam])==0: cam_map.append({'camera': cam, 'multicam': None})
+            
+            for c in range(len(cam_map)):
+                if (cam_map[c]['camera'] not in cam_names): del cam_map[c]
+            
+            self._settings.set(['multicam_mapping'], cam_map)
 
             self._logger.debug("Cameras found: {0}".format([{'device': d, 'camera': video_devices[d]} for d in video_devices]))
             self._event_bus.fire(event, payload={'cameras': [{'device': d, 'camera': video_devices[d]} for d in video_devices]})
