@@ -23,16 +23,21 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         v4l2_list_ctrls = subprocess.check_output(['v4l2-ctl','-d',os.path.join('/dev',device),'--list-ctrls-menus'], stderr=subprocess.STDOUT).decode('utf-8').split('\n')
         last_ctrl = None
         last_ctrl_is_menu = False
+        self._logger.debug("[{0}] Processing output of v4l2-ctl --list-ctrls-menus:", device)
         for line in v4l2_list_ctrls:
             m = CTRL_PAT.match(line)
             if m is None and not last_ctrl_is_menu: 
+                self._logger.debug("[{1}] Skipping line, no CTRL_PAT match: {0}".format(line, device))
                 continue
             if m is None and last_ctrl_is_menu:
                 m = MENU_PAT.match(line)
                 if m is None: 
-                    continue
+                    self._logger.debug("[{1}] Skipping line, no MENU_PAT match: {0}".format(line, device))
+                    continue                    
                 ctrls[last_ctrl]['values'].append({'value': m.group('value'), 'desc': m.group('desc')})
+                self._logger.debug("[{1}] Found MENU item in: {0}".format(line, device))
                 continue
+            self._logger.debug("[{1}] Found CONTROL in: {0}".format(line, device))
             last_ctrl = m.group('name')
             ctrl = {'type': m.group('type')}
             if m.group('type') in ['menu','intmenu']:
