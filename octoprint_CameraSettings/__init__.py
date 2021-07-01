@@ -54,6 +54,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         return dict(
             show_preview=True,
             camera_name_filters=[
+                r'^bcm2835-codec$',
                 r'^bcm2835-codec-\w+$',
                 r'^bcm2835-isp-\w+$'
             ],
