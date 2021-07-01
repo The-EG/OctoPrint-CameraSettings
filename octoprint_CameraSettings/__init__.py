@@ -9,7 +9,7 @@ import os
 import re
 import threading
 
-CTRL_PAT = re.compile(r' +(?P<name>\w+) 0x\w+ \((?P<type>\w+)\) *: (min=(?P<min>[\-\d]+))? ?(max=(?P<max>[\-\d]+))? ?(step=(?P<step>[\-\d]+))? ?(default=(?P<default>[\-\d]+))? ?(value=(?P<value>[\-\d]+))? ?(flags=(?P<flags>\w+))?')
+CTRL_PAT = re.compile(r' +(?P<name>\w+) ?(?P<id>0x\w+)? \((?P<type>\w+)\) *: (min=(?P<min>[\-\d]+))? ?(max=(?P<max>[\-\d]+))? ?(step=(?P<step>[\-\d]+))? ?(default=(?P<default>[\-\d]+))? ?(value=(?P<value>[\-\d]+))? ?(flags=(?P<flags>\w+))?')
 MENU_PAT = re.compile(r'[\t ]+(?P<value>\d+): (?P<desc>.*)')
 
 class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
@@ -59,6 +59,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         return dict(
             show_preview=True,
             camera_name_filters=[
+                r'^bcm2835-codec$',
                 r'^bcm2835-codec-\w+$',
                 r'^bcm2835-isp-\w+$'
             ],
