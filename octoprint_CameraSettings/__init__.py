@@ -23,7 +23,7 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         v4l2_list_ctrls = subprocess.check_output(['v4l2-ctl','-d',os.path.join('/dev',device),'--list-ctrls-menus'], stderr=subprocess.STDOUT).decode('utf-8').split('\n')
         last_ctrl = None
         last_ctrl_is_menu = False
-        self._logger.debug("[{0}] Processing output of v4l2-ctl --list-ctrls-menus:", device)
+        self._logger.debug("[{0}] Processing output of v4l2-ctl --list-ctrls-menus:".format(device))
         for line in v4l2_list_ctrls:
             m = CTRL_PAT.match(line)
             if m is None and not last_ctrl_is_menu: 
@@ -172,14 +172,16 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
                 if len(video_ctrls[dev])==0: del video_devices[dev]
 
             cam_names = [video_devices[d] for d in video_devices]
+            self._logger.debug("Building multicam_mapping")
             cam_map = self._settings.get(['multicam_mapping'])
+            self._logger.debug("Original multicam_mapping {0}".format(cam_map))
             for cam in cam_names:
                 if len([x for x in cam_map if x['camera']==cam])==0: cam_map.append({'camera': cam, 'multicam': None})
             
-            for c in range(len(cam_map)):
-                if (cam_map[c]['camera'] not in cam_names): del cam_map[c]
-            
-            self._settings.set(['multicam_mapping'], cam_map)
+            cam_map = [x for x in cam_map if x['camera'] in cam_names]
+            self._logger.debug("New multicam_mapping {0}".format(cam_map))
+
+            self._settings.set(['multicam_mapping'], cam_map, True)
 
             self._logger.debug("Cameras found: {0}".format([{'device': d, 'camera': video_devices[d]} for d in video_devices]))
             self._event_bus.fire(event, payload={'cameras': [{'device': d, 'camera': video_devices[d]} for d in video_devices]})
