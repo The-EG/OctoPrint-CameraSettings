@@ -64,10 +64,10 @@ $(function() {
             repeat_sequence_header: { use: ko.observable(false), value: ko.observable(undefined) },
             backlight_compensation: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             pan_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
-            pan_relative: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            pan_relative: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(-4480), max: ko.observable(4480), step: ko.observable(0) },
             pan_speed: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             tilt_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
-            tilt_relative: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            tilt_relative: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(-1920), max: ko.observable(1920), step: ko.observable(0) },
             tilt_speed: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             focus_absolute: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             focus: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
@@ -94,8 +94,7 @@ $(function() {
             save_user_settings: { use: ko.observable(false) },
             restore_user_settings: { use: ko.observable(false) },
             restore_factory_settings: { use: ko.observable(false) },
-            pan_reset: { use: ko.observable(false) },
-            tilt_reset: { use: ko.observable(false) },
+
         };
 
         self.shouldUpdateSettings = false;
