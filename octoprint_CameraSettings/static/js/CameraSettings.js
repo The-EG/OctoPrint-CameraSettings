@@ -91,22 +91,16 @@ $(function() {
             auto_white_balance_speed: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             auto_white_balance_delay: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
 
-            save_user_settings: { use: ko.observable(false) },
-            restore_user_settings: { use: ko.observable(false) },
-            restore_factory_settings: { use: ko.observable(false) },
-
         };
 
         self.shouldUpdateSettings = false;
 
         for (var control in self.controls) {
-            if (control.value) { // unimplemented controls (buttons) don't have a value yet
-                var updateControl = function(ctrlName) {
-                    return () => self.sendSetControl(ctrlName);
-                }
-
-                self.controls[control].value.subscribe(updateControl(control));
+            var updateControl = function(ctrlName) {
+                return () => self.sendSetControl(ctrlName);
             }
+
+            self.controls[control].value.subscribe(updateControl(control));
         }
 
         self.sendSetControl = function(control) {
