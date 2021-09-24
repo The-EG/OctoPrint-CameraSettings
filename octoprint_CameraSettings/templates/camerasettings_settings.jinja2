@@ -46,8 +46,10 @@
     <div class="span8">
         <div class="camPreviewContainerOuter" data-bind="visible: settings.settings.plugins.camerasettings.show_preview">
             <div class="camPreviewContainer">
-                <img data-bind="attr: { src: cameraSrc }, style: { transform: `rotate(${cameraRot90() ? '-90deg': '0deg'}) scaleX(${cameraFlipH() ? -1: 1}) scaleY(${cameraFlipV() ? -1: 1})`}" class="camPreview">
+                <img data-bind="hidden: webcamHLS, attr: { src: cameraSrc }, style: { transform: `rotate(${cameraRot90() ? '-90deg': '0deg'}) scaleX(${cameraFlipH() ? -1: 1}) scaleY(${cameraFlipV() ? -1: 1})`}" class="camPreview">    
+                <video id="camerasettings_preview_hls" autoplay="" muted="" controls="" data-bind="visible: webcamHLS, attr: { src: cameraSrc }, style: { transform: `rotate(${cameraRot90() ? '-90deg': '0deg'}) scaleX(${cameraFlipH() ? -1: 1}) scaleY(${cameraFlipV() ? -1: 1})`}" class="camPreview"></video>
             </div>
+            
         </div>
     </div>
     <div class="span4">

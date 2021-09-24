@@ -20,6 +20,8 @@ $(function() {
         self.presetName = ko.observable(undefined);
         self.presetListName = ko.observable(undefined);
 
+        self.webcamHLS = ko.observable(false);
+
         self.controls = {
             exposure_auto: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             auto_exposure: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
@@ -270,6 +272,21 @@ $(function() {
                 self.cameraFlipV(profile.flipV());
                 self.cameraRot90(profile.rotate90());
                 self.cameraSrc(profile.URL());
+            }
+
+            if (determineWebcamStreamType(self.cameraSrc())=="hls") {
+                var video = document.getElementById("camerasettings_preview_hls");
+                self.webcamHLS(true);
+                if (video.canPlayType("application/vnd.apple.mpegurl")) {
+                    // do nothing , the video tag already has the URL
+                } else if (Hls.isSupported()) {
+                    var hls = new Hls();
+
+                    hls.loadSource(self.cameraSrc());
+                    hls.attachMedia(video);
+                }
+            } else {
+                self.webcamHLS(false);
             }
         }
 
