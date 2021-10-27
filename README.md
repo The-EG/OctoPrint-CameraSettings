@@ -18,3 +18,6 @@ or manually using this URL:
 
     https://github.com/The-EG/OctoPrint-CameraSettings/archive/main.zip
 
+## Questions and Contact
+
+If you find a bug or want to request a feature, please open an issue here as approprite. For more general questions or feedback, I can be found on the [OctoPrint Community Forum](https://community.octoprint.org/) (TTalkington) and on the official [OctoPrint Discord Server](https://discord.octoprint.org/) (The-EG).
