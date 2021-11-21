@@ -82,8 +82,14 @@
     {{ bool_control('vertical_flip', 'Vertical Flip') }}
     {{ slider_control('rotate', 'Rotation') }}
 
+    {{ menu_control('camera_orientation', 'Camera Orientation') }}
+
     {{ bool_control('image_stabilization', 'Image Stabilization') }}
     {{ menu_control('power_line_frequency', 'Power Line Frequency') }}
+
+    {{ slider_control('vertical_blanking', 'Vertical Blanking') }}
+    {{ slider_control('horizontal_blanking', 'Horizontal Blanking') }}
+
     {{ menu_control('scene_mode', 'Scene Mode') }}
     {{ slider_control('backlight_compensation', 'Backlight Compensation') }}
     {{ menu_control('auto_exposure', 'Auto Exposure') }}
@@ -97,6 +103,7 @@
     {{ menu_control('iso_sensitivity_auto', 'ISO Sensitivity Auto') }}
     {{ menu_control('iso_sensitivity', 'ISO Sensitivity') }}
     {{ slider_control('gain', 'Gain') }}
+    {{ slider_control('analogue_gain', 'Analogue Gain') }}
 
     {{ bool_control('focus_auto', 'Focus Auto') }}
     {{ slider_control('focus_absolute', 'Focus Absolute') }}
@@ -139,6 +146,7 @@
 
     {{ menu_control('video_bitrate_mode', 'Video Bitrate Mode') }}
     {{ slider_control('video_bitrate', 'Video Bitrate') }}
+    {{ slider_control('pixel_rate', 'Pixel Rate') }}
 
     {{ bool_control('repeat_sequence_header', 'Repeat Sequence Header') }}
     {{ slider_control('h264_i_frame_period', 'H.264 I-Frame Period')}}
