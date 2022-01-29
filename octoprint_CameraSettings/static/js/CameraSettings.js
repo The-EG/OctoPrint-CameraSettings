@@ -79,6 +79,7 @@ $(function() {
             hue_auto: { use: ko.observable(false), value: ko.observable(undefined) },
             gamma: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             focus_auto: { use: ko.observable(false), value: ko.observable(undefined) },
+            focus_automatic_continuous: { use: ko.observable(false), value: ko.observable(undefined) },
             privacy: { use: ko.observable(false), value: ko.observable(undefined) },
             disable_video_processing: { use: ko.observable(false), value: ko.observable(undefined) },
             led1_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
