@@ -20,7 +20,9 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
     def get_camera_ctrls(self, device):
         ctrls = {}
         self._logger.debug("Getting controls for {0}".format(device))
-        v4l2_list_ctrls = subprocess.check_output(['v4l2-ctl','-d',os.path.join('/dev',device),'--list-ctrls-menus'], stderr=subprocess.STDOUT).decode('utf-8').split('\n')
+        # using run instead of check_output here in the odd case that we get passed a video device
+        # that doesn't actually exist
+        v4l2_list_ctrls = subprocess.run(['v4l2-ctl','-d',os.path.join('/dev',device),'--list-ctrls-menus'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout.decode('utf-8').split('\n')
         last_ctrl = None
         last_ctrl_is_menu = False
         self._logger.debug("[{0}] Processing output of v4l2-ctl --list-ctrls-menus:".format(device))
