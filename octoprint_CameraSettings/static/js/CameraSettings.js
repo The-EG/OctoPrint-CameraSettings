@@ -107,6 +107,16 @@ $(function() {
             horizontal_blanking: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             analogue_gain: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             pixel_rate: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+
+            pan_relative: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            tilt_relative: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+
+            pan_reset: { use: ko.observable(false), value: ko.observable(1) },
+            tilt_reset: { use: ko.observable(false), value: ko.observable(1) },
+
+            save_user_settings: { use: ko.observable(false), value: ko.observable(1) },
+            restore_user_settings: { use: ko.observable(false), value: ko.observable(1) },
+            restore_factory_settings: { use: ko.observable(false), value: ko.observable(1) }
         };
 
         self.shouldUpdateSettings = false;

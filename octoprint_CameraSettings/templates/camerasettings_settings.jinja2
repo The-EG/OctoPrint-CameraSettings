@@ -41,6 +41,29 @@
 </div>
 {% endmacro %}
 
+{% macro relative_control(control_var, control_name) %}
+<div class="control-group" data-bind="visible: controls.{{ control_var }}.use">
+    <label class="control-label">{{ control_name }}</label>
+    <div class="controls">
+        <button class="span2" data-bind="click: controls.{{ control_var }}.value(controls.{{control_var}}.min());">-100</button>
+        <button class="span2" data-bind="click: controls.{{ control_var }}.value(controls.{{control_var}}.min() * 0.5);">-50</button>
+        <button class="span2" data-bind="click: controls.{{ control_var }}.value(controls.{{control_var}}.min() * 0.1);">-10</button>
+        <button class="span2" data-bind="click: controls.{{ control_var }}.value(controls.{{control_var}}.max() * 0.1);">+10</button>
+        <button class="span2" data-bind="click: controls.{{ control_var }}.value(controls.{{control_var}}.max() * 0.5);">+50</button>
+        <button class="span2" data-bind="click: controls.{{ control_var }}.value(controls.{{control_var}}.max());">+100</button>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro button_control(control_var, control_name) %}
+<div class="control-group" data-bind="visible: controls.{{ control_var }}.use">
+    <label class="control-label">{{ control_name }}</label>
+    <div class="controls">
+        <button class="span4" data-bind="click: () => controls.{{ control_var }}.value(controls.{{ control_var }}.value() * -1)">{{ control_name }}</button>
+    </div>
+</div>
+{% endmacro %}
+
 <h3>Camera Settings</h3>
 <div class="row-fluid">
     <div class="span8">
@@ -120,6 +143,10 @@
     {{ slider_control('tilt_speed', 'Tilt Absolute') }}
     {{ slider_control('pan_absolute', 'Pan Absolute') }}
     {{ slider_control('pan_speed', 'Pan Absolute') }}
+    {{ relative_control('pan_relative', 'Pan Relative') }}
+    {{ button_control('pan_reset', 'Pan Reset') }}
+    {{ relative_control('tilt_relative', 'Tilt Relative') }}
+    {{ button_control('tilt_reset', 'Tilt Reset') }}
 
     {{ slider_control('sharpness', 'Sharpness') }}
     {{ slider_control('brightness', 'Brightness') }}
@@ -173,9 +200,13 @@
     {{ bool_control('band_stop_filter', 'Band Stop Filter') }}
 
     {{ slider_control('iris_absolute', 'Iris Absolute') }}
-    {{ slider_control('iris_relative', 'Iris Relative') }}
+    {{ relative_control('iris_relative', 'Iris Relative') }}
 
     {{ menu_control('test_pattern', 'Test Pattern') }}
+
+    {{ button_control('save_user_settings', 'Save User Settings') }}
+    {{ button_control('restore_user_settings', 'Restore User Settings') }}
+    {{ button_control('restore_factory_settings', 'Restore Factory Settings') }}
 </div>
 <hr>
 
