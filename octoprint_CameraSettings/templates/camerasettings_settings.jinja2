@@ -174,7 +174,6 @@
 
     {{ slider_control('dynamic_noise_reduction', 'Dynamic Noise Reduction') }}
 
-
     {{ slider_control('compression_quality', 'Compression Quality') }}
 
     {{ menu_control('video_bitrate_mode', 'Video Bitrate Mode') }}
@@ -187,6 +186,11 @@
     {{ slider_control('h264_maximum_qp_value', 'H.264 Max. QP Value')}}
     {{ menu_control('h264_level', 'H.264 Level') }}
     {{ menu_control('h264_profile', 'H.264 Profile') }}
+    {{ menu_control('h264_decode_mode', 'H.264 Decode Mode') }}
+    {{ menu_control('h264_start_code', 'H.264 Start Code') }}
+
+    {{ menu_control('hevc_decode_mode', 'HEVC Decode Mode') }}
+    {{ menu_control('hevc_start_code', 'HEVC Start Code') }}
 
     {{ bool_control('privacy', 'Privacy Shield is down') }}
 
@@ -194,6 +198,10 @@
     {{ slider_control('led1_frequency', 'LED Blink Frequency') }}
 
     {{ slider_control('raw_bits_per_pixel', 'Raw Bits Per Pixel') }}
+
+    {{ slider_control('min_number_of_capture_buffers', 'Min. Number of Capture Buffers') }}
+
+    {{ slider_control('frame_rate', 'Frame Rate') }}
 
     {{ bool_control('disable_video_processing', 'Disable Video Processing') }}
 
