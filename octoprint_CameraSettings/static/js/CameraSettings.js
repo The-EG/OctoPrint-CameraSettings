@@ -121,6 +121,8 @@ $(function() {
             pan_reset: { use: ko.observable(false), value: ko.observable(1) },
             tilt_reset: { use: ko.observable(false), value: ko.observable(1) },
 
+            link_frequency: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+
             save_user_settings: { use: ko.observable(false), value: ko.observable(1) },
             restore_user_settings: { use: ko.observable(false), value: ko.observable(1) },
             restore_factory_settings: { use: ko.observable(false), value: ko.observable(1) }
