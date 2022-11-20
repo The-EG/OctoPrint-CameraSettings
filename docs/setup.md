@@ -44,7 +44,7 @@ If the raspicam won't work in higher resolutions after doing the above, tell the
 
 ### Bitrate
 
-If the feed from the raspicam looks pixelated or corrupted, first try increasing the bitrate in through this plugin. If that doesn't improve the quality, increase the GPU memory (`sudo raspi-config`, Performance->GPU Memory), to *at most* 256.
+If the feed from the raspicam looks pixelated or corrupted, first try increasing the bitrate through this plugin. If that doesn't improve the quality, increase the GPU memory (`sudo raspi-config`, Performance->GPU Memory), to *at most* 256.
 
 ## v4l-utils
 
