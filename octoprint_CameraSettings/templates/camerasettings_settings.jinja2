@@ -185,6 +185,51 @@
     {{ slider_control('video_bitrate', 'Video Bitrate') }}
     {{ slider_control('pixel_rate', 'Pixel Rate') }}
 
+    {{ slider_control('video_b_frames', 'Video B Frames') }}
+    {{ slider_control('video_gop_size', 'Video GOP Size') }}
+    {{ slider_control('video_peak_bitrate', 'Video Peak Bitrate') }}
+    {{ menu_control('sequence_header_mode', 'Sequence Header Mode') }}
+    {{ menu_control('slice_partitioning_method', 'Slice Partitioning Method') }}
+    {{ slider_control('maximum_bytes_in_a_slice', 'Maximum Bytes in a Slice') }}
+    {{ slider_control('number_of_mbs_in_a_slice', 'Number of Mbs in a Slice') }}
+    {{ slider_control('base_layer_priority_id', 'Base Layer Priority ID') }}
+    {{ slider_control('ltr_count', 'LTR Count') }}
+    {{ slider_control('frame_ltr_index', 'Frame LTR Index') }}
+    {{ slider_control('intra_refresh_period', 'Intra-Refresh Period') }}
+    {{ menu_control('h264_entropy_mode', 'H.264 Entropy Mode') }}
+    {{ slider_control('h264_i_frame_qp_value', 'H.264 I Frame QP Value') }}
+    {{ slider_control('h264_i_frame_minimum_qp_value', 'H.264 Min. I Frame QP Value') }}
+    {{ slider_control('h264_i_frame_maximum_qp_value', 'H.264 Max. I Frame QP Value') }}
+    {{ slider_control('h264_p_frame_qp_value', 'H.264 P Frame QP Value') }}
+    {{ slider_control('h264_p_frame_minimum_qp_value', 'H.264 Min. P Frame QP Value') }}
+    {{ slider_control('h264_p_frame_maximum_qp_value', 'H.264 Max. P Frame QP Value') }}
+    {{ slider_control('h264_b_frame_qp_value', 'H.264 B Frame QP Value') }}
+    {{ slider_control('h264_b_frame_minimum_qp_value', 'H.264 Min. B Frame QP Value') }}
+    {{ slider_control('h264_b_frame_maximum_qp_value', 'H.264 Max. B Frame QP Value') }}
+    {{ bool_control('h264_8x8_transform_enable', 'H.264 8x8 Transform') }}
+    {{ menu_control('h264_loop_filter_mode', 'H.264 Loop Filter Mode') }}
+    {{ slider_control('h264_loop_filter_alpha_offset', 'H.264 Loop Filter Alpha Offset') }}
+    {{ slider_control('h264_loop_filter_beta_offset', 'H.264 Loop Filter Beta Offset') }}
+    {{ menu_control('mpeg4_level', 'MPEG4 Level') }}
+    {{ menu_control('mpeg4_profile', 'MPEG4 Profile') }}
+    {{ menu_control('vp8_profile', 'VP8 Profile') }}
+    {{ slider_control('vpx_minimum_qp_value', 'VPX Minimum QP Value') }}
+    {{ slider_control('vpx_maximum_qp_value', 'VPX Maximum QP Value') }}
+    {{ menu_control('hevc_profile', 'HEVC Profile') }}
+    {{ slider_control('hevc_minimum_qp_value', 'HEVC Minimum QP Value') }}
+    {{ slider_control('hevc_maximum_qp_value', 'HEVC Maximum QP Value') }}
+    {{ slider_control('hevc_i_frame_qp_value', 'HEVC I Frame QP Value') }}
+    {{ slider_control('hevc_i_frame_minimum_qp_value', 'HEVC Min. I Frame QP Value') }}
+    {{ slider_control('hevc_i_frame_maximum_qp_value', 'HEVC Max. I Frame QP Value') }}
+    {{ slider_control('hevc_p_frame_qp_value', 'HEVC P Frame QP Value') }}
+    {{ slider_control('hevc_p_frame_minimum_qp_value', 'HEVC Min. P Frame QP Value') }}
+    {{ slider_control('hevc_p_frame_maximum_qp_value', 'HEVC Max. P Frame QP Value') }}
+    {{ slider_control('hevc_b_frame_qp_value', 'HEVC B Frame QP Value') }}
+    {{ slider_control('hevc_b_frame_minimum_qp_value', 'HEVC Min. B Frame QP Value') }}
+    {{ slider_control('hevc_b_frame_maximum_qp_value', 'HEVC Max. B Frame QP Value') }}
+    {{ slider_control('constant_quality', 'Constant Quality') }}
+    {{ menu_control('frame_skip_mode', 'Frame Skip Mode') }}
+
     {{ bool_control('repeat_sequence_header', 'Repeat Sequence Header') }}
     {{ slider_control('h264_i_frame_period', 'H.264 I-Frame Period')}}
     {{ slider_control('h264_minimum_qp_value', 'H.264 Min. QP Value')}}

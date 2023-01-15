@@ -70,6 +70,52 @@ $(function() {
             h264_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
             h264_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
 
+            video_b_frames: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            video_gop_size: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            video_peak_bitrate: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            sequence_header_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            maximum_bytes_in_a_slice: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            number_of_mbs_in_a_slice: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            slice_partitioning_method: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            base_layer_priority_id: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            ltr_count: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            frame_ltr_index: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            intra_refresh_period: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_i_frame_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_i_frame_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_i_frame_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_p_frame_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_p_frame_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_p_frame_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_b_frame_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_b_frame_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_b_frame_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_8x8_transform_enable: { use: ko.observable(false), value: ko.observable(undefined) },
+            h264_entropy_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            h264_loop_filter_alpha_offset: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_loop_filter_beta_offset: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            h264_loop_filter_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            mpeg4_level: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            mpeg4_profile: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            vpx_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            vpx_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            vp8_profile: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            hevc_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_i_frame_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_i_frame_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_i_frame_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_p_frame_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_p_frame_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_p_frame_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_b_frame_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_b_frame_minimum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_b_frame_maximum_qp_value: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            hevc_profile: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            hevc_level: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+            constant_quality: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
+            frame_skip_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+
             hevc_decode_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             hevc_start_code: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
             min_number_of_capture_buffers: { use: ko.observable(false), value: ko.observable(undefined), min: ko.observable(0), max: ko.observable(100), step: ko.observable(1) },
@@ -215,7 +261,7 @@ $(function() {
                         if (self.controls[control].step) self.controls[control].step(controls[control].step);
                         if (controls[control].type==='bool') {
                             self.controls[control].value(controls[control].value==='1' ? true : false);
-                        } else if (controls[control].type==='button' || controls[control].type==='unknown') {
+                        } else if (controls[control].type==='button' || controls[control].type==='unknown' || controls[control].type==='bitmask') {
                             continue; // ignore 'button' and 'unknown' controls for now  
                         } else {
                             self.controls[control].value(controls[control].value);
