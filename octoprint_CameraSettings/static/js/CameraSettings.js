@@ -122,6 +122,8 @@ $(function() {
             pan_reset: { use: ko.observable(false), value: ko.observable(1) },
             tilt_reset: { use: ko.observable(false), value: ko.observable(1) },
 
+            ipu3_pipe_mode: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
+
             link_frequency: { use: ko.observable(false), value: ko.observable(undefined), values: ko.observableArray([]) },
 
             group_hold: { use: ko.observable(false), value: ko.observable(undefined) },
