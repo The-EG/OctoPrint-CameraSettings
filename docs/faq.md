@@ -33,6 +33,11 @@ This can be done by changing the 'Startup Preset Apply Count' number in the plug
 ## This plugin doesn't show up in the Plugin Manager or I tried to install it manually and I get an error: ERROR: Package 'OctoPrint-CameraSettings' requires a different Python: 2.7.16 not in '>=3, <4'
 
 You are running Python 2 and this plugin only supports Python 3. See https://octoprint.org/blog/2020/09/10/upgrade-to-py3/
+
 ## I have multiple cameras but the preview doesn't change when I select a different camera in the dropdown
 
 The preview shown is the same stream that is configured in OctoPrint. If you have multiple cameras, you may also want to use the [MultiCam](https://plugins.octoprint.org/plugins/multicam/) plugin. If that plugin is installed, Camera Settings will detect it and allow you to link the cameras detected to profiles defined in MultiCam. If `OctoPrint-MultiCam Integration` is enabled, the preview shown will use the settings in the appropriate profile, allowing you to view the preview for multiple cameras.
+
+## How do I install the latest release candidate?
+
+New features and fixes will be released in a release candidate for testing before general release. You can install the latest release candidate by opening OctoPrint settings (wrench icon), selecting 'Software Update' under 'OctoPrint,' and then selecting the 'Release Candidate' channel for this plugin (Camera Settings).
