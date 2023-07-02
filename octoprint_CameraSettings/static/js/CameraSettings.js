@@ -251,7 +251,6 @@ $(function() {
             if (payload.controls) {
                 var controls = payload.controls;
 
-                controls['hevc_sequence_parameter_set'] = {'type': 'unknown'};
                 self.shouldUpdateSettings = false;
                 for(var control in self.controls) {
                     if (control in controls) {
