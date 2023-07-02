@@ -135,6 +135,8 @@ class CameraSettingsPlugin(octoprint.plugin.SettingsPlugin,
         self._logger.debug("Controls: {0}".format(ctrl_args))
         for _ in range(count):
             for control in controls:
+                    if controls[control] is True: controls[control] = 1
+                    if controls[control] is False: controls[control] = 0
                     self._logger.debug("Setting {0} = {1} on {2}".format(control, controls[control], device))
                     try:
                         out = subprocess.check_output(
