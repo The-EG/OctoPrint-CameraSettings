@@ -251,6 +251,7 @@ $(function() {
             if (payload.controls) {
                 var controls = payload.controls;
 
+                controls['hevc_sequence_parameter_set'] = {'type': 'unknown'};
                 self.shouldUpdateSettings = false;
                 for(var control in self.controls) {
                     if (control in controls) {
@@ -275,7 +276,7 @@ $(function() {
                 self.unknownControls = {};
                 self.showUnkControlsWarning(false);
                 for (var control in controls) {
-                    if (!(control in self.controls) || (controls[control].type==='unknown')) {
+                    if (!(control in self.controls || controls[control].type==='unknown')) {
                         self.unknownControls[control] = controls[control];
                         self.showUnkControlsWarning(true);
                     }
